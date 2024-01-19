@@ -1,8 +1,55 @@
-.memos a {color:#208ad1;}    /* 链接 */
+/* 链接 */
+.memos a {color:#208ad1;}
 
+/* 字体 */
 body{font-family: "LXGW WenKai Screen", sans-serif !important;}
 
+/* 标题 */
 div.title {
     font-size: xx-large;
     font-weight: bold;
+}
+
+/* 搜索栏 */
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* margin-top: 2px; */
+    margin-left: 20px;
+}
+
+.search-input {
+    width: 250px;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 25px;
+    outline: none;
+    font-size: 16px;
+}
+
+.search-input::placeholder {
+    color: #999;
+}
+
+.search-input:focus {
+    border-color: #007BFF;
+}
+
+.search-btn {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 25px;
+    font-size: 16px;
+    margin-left: -40px;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.search-btn:hover {
+    background-color: #0056b3;
 }

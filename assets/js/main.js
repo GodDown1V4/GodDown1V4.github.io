@@ -74,23 +74,27 @@ var tag='';
 var btnRemove = 0
 var memoDom = document.querySelector(memo.domId);
 var load = '<button class="load-btn button-load">努力加载中……</button>'
-if (memoDom) {
-    memoDom.insertAdjacentHTML('afterend', load);
-    getFirstList() // 首次加载数据
-	// 添加 button 事件监听器
-	btnRemove = 0;
-    var btn = document.querySelector("button.button-load");
-    btn.addEventListener("click", function () {
-        btn.textContent = '努力加载中……';
-        updateHTMl(nextDom)
-        if (nextLength < limit) { // 返回数据条数小于限制条数，隐藏
-            document.querySelector("button.button-load").remove()
-			btnRemove = 1
-            return
-        }
-        getNextList()
-    });
+// 页面加载
+function Reload(){
+    if (memoDom) {
+        memoDom.insertAdjacentHTML('afterend', load);
+        getFirstList() // 首次加载数据
+        // 添加 button 事件监听器
+        btnRemove = 0;
+        var btn = document.querySelector("button.button-load");
+        btn.addEventListener("click", function () {
+            btn.textContent = '努力加载中……';
+            updateHTMl(nextDom)
+            if (nextLength < limit) { // 返回数据条数小于限制条数，隐藏
+                document.querySelector("button.button-load").remove()
+                btnRemove = 1
+                return
+            }
+            getNextList()
+        });
+    }
 }
+Reload();
 
 function getFirstList() {
     var memoUrl_first = memoUrl + "&limit=" + limit;
@@ -126,6 +130,42 @@ function getNextList() {
         }
     })
 }
+
+// 搜索功能
+
+var searchInput = document.querySelector('.search-input');
+var searchBtn = document.querySelector('.search-btn');
+searchInput.addEventListener('keydown', function(event) {
+    // 检查是否按下的是回车键
+    if (event.key === 'Enter' || event.keyCode === 13 || event.key === '') {
+        updateMemoUrl();
+    }
+});
+searchInput.addEventListener('input', function(event) {
+    var searchTerm = searchInput.value.replace(/\s/g, '');
+    if (searchTerm === '') {
+        updateMemoUrl();
+    }
+});
+searchBtn.addEventListener('click', function(event) {
+    updateMemoUrl();
+});
+
+function updateMemoUrl(){
+    var searchTerm = document.querySelector('.search-input').value;
+    if (searchTerm.replace(/\s/g, '')){
+        memoDom.innerHTML = '';
+        memoUrl = memos + "/api/v1/memo?creatorId=" + memo.creatorId + "&rowStatus=NORMAL" + "&content=" + searchTerm;
+        Reload();
+    }
+    else{
+        memoDom.innerHTML = '';
+        memoUrl = memos + "/api/v1/memo?creatorId=" + memo.creatorId + "&rowStatus=NORMAL";
+        Reload();
+    }
+}
+
+// 搜索功能 end
 
 // 标签选择
 
